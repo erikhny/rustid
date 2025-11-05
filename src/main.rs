@@ -1,11 +1,11 @@
 use clap::Parser;
 use rustid::config::Config;
-use rustid::http;
+use rustid::serve;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let config = Config::parse();
-    http::serve(config).await?;
+    serve(config).await?;
 
     Ok(())
 }
