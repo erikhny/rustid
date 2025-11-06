@@ -1,4 +1,3 @@
-﻿
 #[derive(serde::Serialize, serde::Deserialize)]
 struct Client {
     client_name: String,

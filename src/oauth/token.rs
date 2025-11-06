@@ -1,10 +1,10 @@
-﻿use std::convert::Infallible;
-use axum::{debug_handler, Extension, Json};
+use crate::ApiContext;
 use axum::http::StatusCode;
 use axum::response::{IntoResponse, Response};
+use axum::{Extension, Json, debug_handler};
 use serde::{Deserialize, Serialize};
+use std::convert::Infallible;
 use thiserror::Error;
-use crate::ApiContext;
 
 #[derive(Deserialize, Debug, Serialize)]
 pub struct TokenResponse {
@@ -32,9 +32,13 @@ impl IntoResponse for TokenError {
             TokenError::TokenInvalid => (StatusCode::UNAUTHORIZED, "Token invalid"),
             TokenError::Internal => (StatusCode::INTERNAL_SERVER_ERROR, "Internal server error"),
         };
-        (status, Json(TokenErrorResponse {
-            error: error_message.to_string(),
-        })).into_response()
+        (
+            status,
+            Json(TokenErrorResponse {
+                error: error_message.to_string(),
+            }),
+        )
+            .into_response()
     }
 }
 #[derive(Deserialize, Serialize, Debug)]
