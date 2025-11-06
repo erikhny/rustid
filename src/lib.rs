@@ -7,6 +7,7 @@ use crate::http::test;
 
 pub mod config;
 pub mod http;
+pub mod oauth;
 
 #[derive(Clone)]
 struct ApiContext {
@@ -26,4 +27,5 @@ pub async fn serve(config: Config) -> Result<(), std::io::Error> {
 
 fn api_router() -> Router {
     test::router()
+        .merge(oauth::router())
 }
