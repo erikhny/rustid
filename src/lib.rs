@@ -1,8 +1,8 @@
-use crate::config::Config;
+use crate::config::{Settings};
 use crate::http::test;
 use axum::{Router};
-use std::sync::Arc;
 use sqlx::PgPool;
+use sqlx::postgres::PgPoolOptions;
 use tower::{ServiceBuilder};
 use tower_http::trace::TraceLayer;
 
@@ -12,14 +12,17 @@ pub mod oauth;
 
 #[derive(Clone)]
 struct ApiContext {
-    config: Arc<Config>,
     db: PgPool,
 }
 
-pub async fn create_router(config: Config, db_pool: PgPool) -> Result<Router, std::io::Error> {
+pub async fn create_router(configuration: Settings) -> Result<Router, std::io::Error> {
+    let connection_string = configuration.database.connection_string();
+    let pool = PgPoolOptions::new()
+        .max_connections(5)
+        .connect(&connection_string).await
+        .expect("failed to connect to postgres");
     let app_context = ApiContext {
-        config: Arc::new(config),
-        db: db_pool,
+        db: pool,
     };
     let app = api_router()
         .layer(ServiceBuilder::new().layer(TraceLayer::new_for_http()))
