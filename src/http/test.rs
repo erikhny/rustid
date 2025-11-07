@@ -1,8 +1,9 @@
 use axum::Router;
 use axum::extract::Path;
 use axum::routing::get;
+use crate::ApiContext;
 
-pub fn router() -> Router {
+pub fn router() -> Router<ApiContext> {
     Router::new().route("/test/{test_value}", get(test_route))
 }
 

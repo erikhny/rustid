@@ -1,9 +1,9 @@
 use crate::ApiContext;
 use axum::http::StatusCode;
 use axum::response::{IntoResponse, Response};
-use axum::{Extension, Json, debug_handler};
+use axum::{Json, debug_handler};
 use serde::{Deserialize, Serialize};
-use std::convert::Infallible;
+use axum::extract::State;
 use thiserror::Error;
 
 #[derive(Deserialize, Debug, Serialize)]
@@ -48,7 +48,7 @@ pub struct TokenErrorResponse {
 
 // Return enum from here.
 #[debug_handler]
-pub async fn token(ctx: Extension<ApiContext>) -> Result<Json<TokenResponse>, TokenError> {
+pub async fn token(State(ctx): State<ApiContext>) -> Result<Json<TokenResponse>, TokenError> {
     Ok(Json(TokenResponse {
         access_token: String::from("123"),
         refresh_token: None,
