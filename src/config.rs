@@ -1,9 +1,12 @@
+use std::collections::HashMap;
 use serde::Deserialize;
+use crate::oauth::types::Client;
 
 #[derive(Deserialize)]
 pub struct Settings {
     pub database: DatabaseSettings,
     pub application_port: u16,
+    pub clients: HashMap<String, Client>,
 }
 
 #[derive(Deserialize, Clone)]
@@ -28,6 +31,9 @@ pub fn get_configuration() -> Result<Settings, config::ConfigError> {
     let settings = config::Config::builder()
         .add_source(
             config::File::new("configuration.yaml", config::FileFormat::Yaml)
+        )
+        .add_source(
+            config::File::new("clients.yaml", config::FileFormat::Yaml)
         )
         .build()?;
     settings.try_deserialize::<Settings>()

@@ -1,0 +1,14 @@
+clients:
+  test-public-client:
+    name: Test Public
+    type: public # pkce enabled by default
+    redirect_uris: ['http://localhost:8080/callback']
+    grant_types: ['authorization_code', 'refresh_token']
+  test-confidential-client:
+    name: Test Confidential
+    type: confidential
+    redirect_uris: ['http://localhost:8080/callback']
+    grant_types: ['authorization_code', 'refresh_token']
+    require_pkce: true
+
+
