@@ -2,7 +2,7 @@ use serde::Deserialize;
 use std::collections::HashMap;
 use std::fmt::{Display, Formatter};
 
-#[derive(serde::Serialize)]
+#[derive(serde::Serialize, Debug, PartialEq)]
 pub struct Client {
     pub client_name: String,
     pub client_id: ClientId,
@@ -82,7 +82,7 @@ impl Client {
     }
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, Debug, PartialEq)]
 pub struct ClientId(String);
 impl ClientId {
     fn from_str(client_id: &str) -> Result<Self, ClientParseError> {
@@ -95,7 +95,7 @@ impl ClientId {
     }
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, Debug, PartialEq)]
 pub struct ClientSecret(String);
 impl ClientSecret {
     fn from_str(client_secret: &str) -> Result<Self, ClientParseError> {
@@ -108,7 +108,7 @@ impl ClientSecret {
     }
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, Debug, PartialEq)]
 pub enum ClientType {
     Public,
     Confidential,
@@ -127,7 +127,7 @@ impl ClientType {
     }
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, Debug, PartialEq)]
 pub enum GrantType {
     AuthorizationCode,
     RefreshToken,
