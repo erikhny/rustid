@@ -6,7 +6,7 @@ use crate::ApiContext;
 
 mod login;
 mod token;
-pub mod types;
+pub mod client;
 
 pub fn router() -> Router<ApiContext> {
     let oauth_routes = Router::new()

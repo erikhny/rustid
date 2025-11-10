@@ -1,11 +1,13 @@
 use std::collections::HashMap;
 use serde::Deserialize;
-use crate::oauth::types::Client;
+use crate::oauth::client::Client;
+use crate::oauth::client::deserialize_clients;
 
 #[derive(Deserialize)]
 pub struct Settings {
     pub database: DatabaseSettings,
     pub application_port: u16,
+    #[serde(deserialize_with = "deserialize_clients")]
     pub clients: HashMap<String, Client>,
 }
 

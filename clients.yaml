@@ -7,6 +7,7 @@ clients:
   test-confidential-client:
     name: Test Confidential
     type: confidential
+    client_secret: notarealsecret
     redirect_uris: ['http://localhost:8080/callback']
     grant_types: ['authorization_code', 'refresh_token']
     require_pkce: true
