@@ -95,6 +95,12 @@ impl ClientId {
     }
 }
 
+impl Display for ClientId {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
+
 #[derive(serde::Serialize, serde::Deserialize, Debug, PartialEq)]
 pub struct ClientSecret(String);
 impl ClientSecret {
