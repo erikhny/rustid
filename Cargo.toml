@@ -13,6 +13,7 @@ name = "rustid"
 [dependencies]
 anyhow = "1.0.100"
 axum = { version = "0.8.6", features = ["tower-log", "macros"] }
+chrono = "0.4.43"
 clap = { version = "4.5.51", features = ["derive"] }
 config = "0.15.18"
 log = "0.4.28"
