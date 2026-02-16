@@ -1,8 +1,10 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::fmt::{Display, Formatter};
 
-#[derive(serde::Serialize, Debug, PartialEq)]
+use crate::oauth::internal::scope::{Claim, Scope};
+
+#[derive(Serialize, Debug, PartialEq)]
 pub struct Client {
     pub client_name: String,
     pub client_id: ClientId,
@@ -10,6 +12,7 @@ pub struct Client {
     pub client_type: ClientType,
     pub redirect_uris: Vec<String>,
     pub grant_types: Vec<GrantType>,
+    pub scope: Option<HashMap<String, Scope>>,
     pub require_pkce: bool,
 }
 
@@ -69,6 +72,10 @@ impl Client {
         }
 
         let require_pkce = false;
+        let scope_map = [Scope::new("test".to_string(), Some("Testing scope".to_string()), vec![Claim::new("test_ing".to_string(), None)])]
+            .into_iter()
+            .map(|s| (s.name.clone(), s))
+            .collect::<HashMap<_, _>>();
 
         Ok(Client {
             client_name,
@@ -77,6 +84,7 @@ impl Client {
             client_secret,
             redirect_uris,
             grant_types,
+            scope: Some(scope_map),
             require_pkce,
         })
     }
